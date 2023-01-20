@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.ui.HomeScreenFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:paddingBottom="30dp"
+        android:layout_height="match_parent"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_margin="30dp"
+            android:text="Hey!"
+            android:id="@+id/tvHey"
+            android:fontFamily="@font/roboto_bold"
+            android:textSize="30sp"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvHey"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="30dp"
+            android:text="Avneet Singh"
+
+            android:id="@+id/tvName"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvName"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="30dp"
+            android:text="My Unique Code"
+            android:id="@+id/tvg"
+            android:fontFamily="@font/roboto_regular"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvg"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="30dp"
+            android:id="@+id/codeCons"
+            android:background="@drawable/rectangle_bg"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            >
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_margin="5dp"
+                android:enabled="false"
+                android:id="@+id/tvCode"
+                android:textColor="#6E7586"
+                android:background="@color/white"
+                app:layout_constraintRight_toLeftOf="@id/copyButton"
+                android:text="324432234234"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_margin="5dp"
+                android:id="@+id/copyButton"
+                android:clickable="true"
+                android:background="@color/white"
+                android:src="@drawable/baseline_content_copy_24"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/codeCons"
+            android:layout_margin="30dp"
+            android:text="My Guardians"
+            android:id="@+id/guardianTv"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/guardianTv"
+            app:cardCornerRadius="10dp"
+            android:id="@+id/superGuard"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            app:cardElevation="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:background="@drawable/gradient_16"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Guardian Name"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textColor="@color/white"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Guardian Name"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/white"
+                    />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/superGuard"
+            tools:listitem="@layout/item_guardian" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:layout_height="60dp"
+        android:text="Add Guardian"
+        android:layout_gravity="bottom"
+        />
+
+</FrameLayout>
