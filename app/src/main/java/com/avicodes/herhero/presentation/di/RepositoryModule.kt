@@ -19,4 +19,5 @@ class RepositoryModule {
     fun provideRepositoryModule(userDataSource: UserDataSource): UserRepository {
         return UserRepositoryImpl(userDataSource)
     }
+
 }

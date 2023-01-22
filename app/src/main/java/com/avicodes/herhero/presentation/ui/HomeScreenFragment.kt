@@ -43,5 +43,7 @@ class HomeScreenFragment : Fragment() {
                 Toast.makeText(requireContext(), "Text copied to clipboard", Toast.LENGTH_LONG).show()
             }
         }
+
+
     }
 }

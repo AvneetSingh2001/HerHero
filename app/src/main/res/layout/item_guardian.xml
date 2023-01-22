@@ -10,11 +10,12 @@
         android:layout_marginTop="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
         app:cardElevation="1dp">
 
-        <LinearLayout
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -23,21 +24,54 @@
             >
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Guardian Name"
                 android:textSize="18sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+
+                android:id="@+id/tvName"
                 android:fontFamily="@font/roboto_bold"
-                android:textColor="@color/main2"
+                android:textColor="@color/black"
                 />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Guardian Name"
+                android:text="Guardian Key"
                 android:textSize="10sp"
+                app:layout_constraintTop_toBottomOf="@id/tvName"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/tvGid"
                 android:fontFamily="@font/roboto_regular"
                 />
 
-        </LinearLayout>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/deleteBtn"
+                android:clickable="true"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/baseline_delete_24"
+                android:backgroundTint="@color/white"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:clickable="false"
+                app:layout_constraintTop_toTopOf="@id/tvName"
+                app:layout_constraintLeft_toRightOf="@id/tvName"
+                android:src="@drawable/baseline_star_24"
+                app:layout_constraintBottom_toBottomOf="@id/tvName"
+                android:backgroundTint="@color/white"/>
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

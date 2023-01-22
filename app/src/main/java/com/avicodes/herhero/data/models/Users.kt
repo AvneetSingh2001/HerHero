@@ -7,5 +7,6 @@ data class Users(
     var name : String? = null,
     var guardians: ArrayList<String>? = null,
     var superGuard: String? = null,
-    var phone: String? = null
+    var phone: String? = null,
+    var location: String? = null
 )

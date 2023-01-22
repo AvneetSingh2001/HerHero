@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.avicodes.herhero.R
 import com.avicodes.herhero.databinding.ActivityMainBinding
 import com.avicodes.herhero.data.models.Users
+import com.avicodes.herhero.data.utils.Response
 import com.avicodes.herhero.presentation.ui.HomeActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -19,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
+import io.grpc.internal.SharedResourceHolder.Resource
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -93,22 +96,10 @@ class MainActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener() { task ->
                 if (task.isSuccessful) {
-
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInWithCredential:success")
                     val firebaseUser = auth.currentUser
-                    if (firebaseUser != null) {
-                        val users = Users(firebaseUser.uid, firebaseUser.displayName, null, null, firebaseUser.phoneNumber)
-                        viewModel.addUser(users)
-                    }
-
                     updateUI(firebaseUser)
                 } else {
                     Toast.makeText(this, "SignIn Failed... Try Again!", Toast.LENGTH_SHORT).show()
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithCredential:failure", task.exception)
-
-                    updateUI(null)
                 }
             }
     }
@@ -125,10 +116,44 @@ class MainActivity : AppCompatActivity() {
         binding.mainCons.visibility = View.VISIBLE
         binding.progCons.visibility = View.INVISIBLE
         if (firebaseUser != null) {
-            Toast.makeText(this, firebaseUser.displayName, Toast.LENGTH_SHORT).show()
-            var intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
-            finish()
+
+            viewModel.checkUser(firebaseUser.uid)
+
+            viewModel.checkUserData.observe(this, Observer { response ->
+                when(response) {
+                    is Response.NotInitialized -> {
+                        binding.mainCons.visibility = View.VISIBLE
+                        binding.progCons.visibility = View.INVISIBLE
+                        Log.e("MYTAG", "not initialised")
+                    }
+
+                    is Response.Loading -> {
+                        binding.mainCons.visibility = View.INVISIBLE
+                        binding.progCons.visibility = View.VISIBLE
+                        Log.e("MYTAG", "loading")
+
+                    }
+
+                    is Response.Success -> {
+                        Log.e("MYTAG", "Suceess")
+                        if(response.message == "Exists") {
+                            val intent = Intent(this, HomeActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            val intent = Intent(this, DetialsActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                    }
+
+                    is Response.Error -> {
+                        Log.e("MYTAG", response.toString())
+                    }
+                }
+
+            })
+
         }
     }
 }
