@@ -94,6 +94,7 @@
             android:layout_height="0dp"
             android:layout_margin="30dp"
             android:paddingBottom="40dp"
+            android:id="@+id/rvGuardians"
             tools:listitem="@layout/item_guardian"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/buttonAddGuardian"

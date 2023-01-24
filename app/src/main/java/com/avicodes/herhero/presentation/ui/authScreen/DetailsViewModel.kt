@@ -2,16 +2,18 @@ package com.avicodes.herhero.presentation.ui.authScreen
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.avicodes.herhero.data.models.Guardians
 import com.avicodes.herhero.data.models.Users
 import com.avicodes.herhero.data.utils.Response
 import com.avicodes.herhero.data.utils.ValidateResponse
 import com.avicodes.herhero.domain.UserRepository
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(
@@ -20,7 +22,7 @@ class DetailsViewModel(
 ): ViewModel() {
 
     var flowState: MutableLiveData<ValidateResponse> = MutableLiveData(ValidateResponse())
-
+    var checkUserData: MutableLiveData<Response> = MutableLiveData(Response.NotInitialized)
 
     fun addUser(name: String, phone: String, location: String) {
 
@@ -56,10 +58,9 @@ class DetailsViewModel(
             && flowState.value?.locEmpty == false
             && flowState.value?.loading == true
         ) {
-            val id = "G-$phone"
             val users = Users(id = auth.currentUser!!.uid, name = name, phone = phone, location = location)
             viewModelScope.launch(Dispatchers.IO) {
-                userRepository.addUser(id, users)
+                userRepository.addUser(users.id, users)
             }
             Log.e("MYTAG", "adduser")
             flowState.value = flowState.value?.copy( success = true)
@@ -68,9 +69,33 @@ class DetailsViewModel(
 
     }
 
+    suspend fun updateLocalListGuardian(gid: String) = coroutineScope {
 
-    fun updateUser(name: String?, guardian: ArrayList<String>?, superGuard: String?, phone: String?, location: String?) {
+        val user = async(Dispatchers.IO) {
+            userRepository.getUser(gid)
+        }.await()
 
+        user?.let {
+            var guardians = Guardians(gid, user.name.toString(), false, user.phone.toString())
+            userRepository.saveGuardiansToDb(guardians)
+        }
+
+    }
+
+
+    fun getSavedGuardians() = liveData{
+        userRepository.getSavedGuardians().collect {
+            emit(it)
+        }
+    }
+
+    fun updateUserGuardian(guardianList: List<Guardians>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            userRepository.updateUserGuardian(auth.uid!!, guardianList)
+        }
+    }
+
+    fun updateUser(name: String?, guardian: List<String>?, superGuard: String?, phone: String?, location: String?) {
         viewModelScope.launch(Dispatchers.IO) {
             //userRepository.updateUser(users.id,users)
         }
@@ -80,5 +105,25 @@ class DetailsViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             userRepository.logoutUser()
         }
+    }
+
+
+    fun checkUser(uid: String) = viewModelScope.launch {
+        checkUserData.postValue(Response.Loading("loading"))
+
+        val check = async{return@async userRepository.checkUser(uid)}.await()
+        Log.e("MYTAG", check.toString())
+
+        try {
+            if (check) {
+                checkUserData.postValue(Response.Success("Exists"))
+            } else {
+                checkUserData.postValue(Response.Success("Not Exists"))
+            }
+        } catch (e: Exception) {
+            checkUserData.postValue(Response.Error(e))
+            Log.e("MYTAG", e.toString())
+        }
+
     }
 }

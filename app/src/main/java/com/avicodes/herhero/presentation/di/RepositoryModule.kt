@@ -1,6 +1,7 @@
 package com.avicodes.herhero.presentation.di
 
 import com.avicodes.herhero.data.repository.UserRepositoryImpl
+import com.avicodes.herhero.data.repository.dataSource.LocalDataSource
 import com.avicodes.herhero.data.repository.dataSource.UserDataSource
 import com.avicodes.herhero.domain.UserRepository
 import dagger.Module
@@ -16,8 +17,8 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideRepositoryModule(userDataSource: UserDataSource): UserRepository {
-        return UserRepositoryImpl(userDataSource)
+    fun provideRepositoryModule(userDataSource: UserDataSource, localDataSource: LocalDataSource): UserRepository {
+        return UserRepositoryImpl(userDataSource, localDataSource)
     }
 
 }

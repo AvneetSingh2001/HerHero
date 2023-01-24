@@ -3,6 +3,7 @@ package com.avicodes.herhero.presentation.di
 import com.avicodes.herhero.domain.UserRepository
 import com.avicodes.herhero.presentation.ui.authScreen.DetailsViewModelFactory
 import com.avicodes.herhero.presentation.ui.authScreen.MainActivityViewModelFactory
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,7 +23,7 @@ class FactoryModule {
 
     @Provides
     @Singleton
-    fun provideDetailViewModelFactory(userRepository: UserRepository) : DetailsViewModelFactory{
-        return DetailsViewModelFactory(userRepository)
+    fun provideDetailViewModelFactory(userRepository: UserRepository, auth: FirebaseAuth) : DetailsViewModelFactory{
+        return DetailsViewModelFactory(userRepository, auth)
     }
 }

@@ -1,5 +1,6 @@
 package com.avicodes.herhero.data.repository.dataSource
 
+import com.avicodes.herhero.data.models.Guardians
 import com.avicodes.herhero.data.models.Users
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -37,6 +38,10 @@ class UserDataSourceImpl(
 
     override suspend fun currentUser(): FirebaseUser {
         return auth.currentUser!!
+    }
+
+    override suspend fun updateUserGuardian(uid: String, gidList: List<Guardians>) {
+        firestoreDb.collection("Users").document(uid).update("guardians", gidList)
     }
 
     override suspend fun logoutUser() {

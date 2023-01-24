@@ -5,29 +5,26 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.avicodes.herhero.R
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.avicodes.herhero.data.models.Guardians
+import com.avicodes.herhero.data.utils.Response
+import com.avicodes.herhero.databinding.FragmentDetailsGuardianBinding
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DetailsGuardianFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DetailsGuardianFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private var _binding : FragmentDetailsGuardianBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var viewModel: DetailsViewModel
+
+    private var guardianList: List<Guardians>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -35,26 +32,67 @@ class DetailsGuardianFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_details_guardian, container, false)
+        _binding = FragmentDetailsGuardianBinding.inflate(inflater, container, false)
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DetailsGuardianFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DetailsGuardianFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel = (activity as DetialsActivity).viewModel
+        initRecyelerView()
+
+        viewModel.getSavedGuardians().observe(viewLifecycleOwner) {
+            guardianList = it
+        }
+
+        binding.apply {
+
+            tvGid.setOnClickListener {
+                tvGid.isErrorEnabled = false
+            }
+
+            buttonAddGuardian.setOnClickListener {
+                val gid = tvGid.editText?.text.toString()
+                if(gid == "") {
+                    tvGid.error = "Required"
+                } else {
+                    viewModel.checkUser(gid)
+                    viewModel.checkUserData.observe(requireActivity(), Observer {
+                            when (it) {
+                                Response.Success("Not Exists") -> {
+                                    tvGid.error = "User Doesn't Exist"
+                                }
+
+                                Response.Success("Exists") -> {
+                                    lifecycleScope.launch {
+                                        viewModel.updateLocalListGuardian(gid)
+                                    }
+                                }
+
+                                else -> {}
+                            }
+                        })
                 }
             }
+
+            btnContinue.setOnClickListener {
+                if(guardianList != null)
+                    viewModel.updateUserGuardian(guardianList!!)
+            }
+
+
+
+
+
+        }
     }
+    private fun initRecyelerView() {
+
+    }
+
+
+
+
 }

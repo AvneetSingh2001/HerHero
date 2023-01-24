@@ -1,5 +1,8 @@
 package com.avicodes.herhero.presentation.di
 
+import com.avicodes.herhero.data.db.GuardiansDao
+import com.avicodes.herhero.data.repository.dataSource.LocalDataSource
+import com.avicodes.herhero.data.repository.dataSource.LocalDataSourceImpl
 import com.avicodes.herhero.data.repository.dataSource.UserDataSource
 import com.avicodes.herhero.data.repository.dataSource.UserDataSourceImpl
 import com.google.firebase.auth.FirebaseAuth
@@ -21,5 +24,11 @@ class DataSourceModule {
         auth: FirebaseAuth
     ): UserDataSource {
         return UserDataSourceImpl(firestoreDb, auth)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLocalDataSource(dao: GuardiansDao): LocalDataSource {
+        return LocalDataSourceImpl(dao)
     }
 }
