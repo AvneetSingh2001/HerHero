@@ -18,5 +18,14 @@
         android:id="@+id/detailsGuardianFragment"
         android:name="com.avicodes.herhero.presentation.ui.authScreen.DetailsGuardianFragment"
         android:label="fragment_details_guardian"
-        tools:layout="@layout/fragment_details_guardian" />
+        tools:layout="@layout/fragment_details_guardian" >
+        <action
+            android:id="@+id/action_detailsGuardianFragment_to_homeActivity"
+            app:destination="@id/homeActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/homeActivity"
+        android:name="com.avicodes.herhero.presentation.ui.HomeActivity"
+        android:label="activity_home"
+        tools:layout="@layout/activity_home" />
 </navigation>

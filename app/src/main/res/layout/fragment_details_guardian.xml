@@ -19,7 +19,7 @@
             android:fontFamily="@font/roboto_bold"
             android:text="Add Guardians"
             android:textColor="@color/black"
-            android:textSize="30sp"
+            android:textSize="24sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,9 +47,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="30dp"
-            android:text="Your Guardians are basically are the persons you consider your saviours, persons you trust and you wants them to know your update if you're in trouble."
+            android:text="Your Guardians are basically are the persons you trust and you wants them to know your updates if you're in trouble."
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv"
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="12dp"
             android:layout_marginRight="30dp"
             android:hint="Guardian's Unique ID"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -81,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="12dp"
             android:layout_marginRight="30dp"
             android:backgroundTint="@color/black"
             android:text="ADD Guardian"
@@ -89,15 +89,46 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvGid" />
 
+        <TextView
+            android:id="@+id/tv3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Your Guardians"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintTop_toBottomOf="@id/buttonAddGuardian"
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/tv4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:text="Long press to make Super Guardian"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv3"
+
+            />
+
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="5dp"
             android:paddingBottom="40dp"
             android:id="@+id/rvGuardians"
             tools:listitem="@layout/item_guardian"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/buttonAddGuardian"
+            app:layout_constraintTop_toBottomOf="@id/tv4"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             />

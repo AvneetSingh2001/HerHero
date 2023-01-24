@@ -14,10 +14,11 @@ import com.avicodes.herhero.data.models.Users
 import com.avicodes.herhero.data.utils.Response
 import com.avicodes.herhero.data.utils.ValidateResponse
 import com.avicodes.herhero.databinding.FragmentDetailsBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class DetailsFragment : Fragment() {
 
     private var _binding: FragmentDetailsBinding? = null
