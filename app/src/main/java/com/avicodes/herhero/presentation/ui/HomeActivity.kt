@@ -7,7 +7,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.avicodes.herhero.R
 import com.avicodes.herhero.databinding.ActivityHomeBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     private var _binding: ActivityHomeBinding? = null
     private val binding get() = _binding!!
@@ -23,6 +25,7 @@ class HomeActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.homeScreenFragment -> showBottomNav()
+                R.id.emergencyFragment -> showBottomNav()
                 else -> hideBottomNav()
             }
         }

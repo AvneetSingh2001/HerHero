@@ -65,7 +65,6 @@ class DetailsGuardianFragment : Fragment() {
         })
 
         initRecyclerView()
-        initList()
 
         binding.apply {
 
@@ -82,8 +81,6 @@ class DetailsGuardianFragment : Fragment() {
                                         lifecycleScope.launch(Dispatchers.IO) {
                                             Log.e("MYTAG","Exists")
                                             viewModel.updateLocalListGuardian(gid)
-                                            if(guardianList != null)
-                                                viewModel.updateUserGuardian(guardianList!!)
                                         }
 
                                     } else {
@@ -126,10 +123,6 @@ class DetailsGuardianFragment : Fragment() {
         }
     }
 
-    private fun initList() {
-        if(guardianList != null)
-            viewModel.updateUserGuardian(guardianList!!)
-    }
 
 
 
